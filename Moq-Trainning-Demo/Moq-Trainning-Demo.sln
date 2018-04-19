@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moq-Trainning-Demo", "Moq-Trainning-Demo\Moq-Trainning-Demo.csproj", "{AE2E4D90-685A-4683-B888-365A58D408C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moq-Trainning-DemoTests", "Moq-Trainning-DemoTests\Moq-Trainning-DemoTests.csproj", "{9ED31443-63B5-4903-B3E9-B8A3B8D9A6CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE2E4D90-685A-4683-B888-365A58D408C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2E4D90-685A-4683-B888-365A58D408C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2E4D90-685A-4683-B888-365A58D408C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2E4D90-685A-4683-B888-365A58D408C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ED31443-63B5-4903-B3E9-B8A3B8D9A6CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ED31443-63B5-4903-B3E9-B8A3B8D9A6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ED31443-63B5-4903-B3E9-B8A3B8D9A6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ED31443-63B5-4903-B3E9-B8A3B8D9A6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04D91FB2-2792-4A69-B88C-049652D9A755}
+	EndGlobalSection
+EndGlobal
