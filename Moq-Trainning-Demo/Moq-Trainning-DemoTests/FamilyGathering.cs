@@ -1,4 +1,4 @@
-﻿#define Scenes3
+﻿#define Scenes4
 using System;
 using Moq_Trainning_Demo;
 
@@ -13,7 +13,7 @@ namespace Moq_Trainning_DemoTests
         {
             Console.WriteLine($"{man.Name},快叫{relativeName}好");
 
-            var result =  man.SayHi(relativeName);
+            var result = man.SayHi(relativeName);
 
             return result;
         }
@@ -62,18 +62,42 @@ namespace Moq_Trainning_DemoTests
         #region 场景3
 
 #if Scenes3
-        public static string SayHi(IMan man, string relativeName)
+        public static void HaveDinner(IMan man, string food, int num)
         {
-            Console.WriteLine($"{man.Name},快叫{relativeName}好");
+            void ManOnFull(object sender, EventArgs args)
+            {
+                var fatMan = (IMan) sender;
+                Console.WriteLine($"吃饱了，体重到了{fatMan.Weight}斤");
+                fatMan.Name = "不减肥就不改名的" + fatMan.Name;
+            }
 
-            var result =  man.SayHi(relativeName);
-
-            return result;
+            Console.WriteLine($"{man.Name},来吃{num}斤{food}");
+            man.ImFull += ManOnFull;
+            man.Eat(num);
+            man.ImFull += ManOnFull;
         }
+
 #endif
 
         #endregion
 
+        #region 场景4
 
+#if Scenes4
+        public static string FaHongbao(IMan man, int num, int amount)
+        {
+            Console.WriteLine($"来来来，{man.Name}给你们{num}个小朋友发红包咯，每个人{100}块");
+            var result = "";
+            for (int i = 0; i < num; i++)
+            {
+                result = man.DoSomething<int>("发红包", amount);
+            }
+
+            return result;
+        }
+
+#endif
+
+        #endregion
     }
 }

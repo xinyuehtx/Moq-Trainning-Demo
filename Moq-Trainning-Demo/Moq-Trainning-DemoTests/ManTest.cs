@@ -1,4 +1,4 @@
-﻿#define Scenes3
+﻿#define Scenes4
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -239,6 +239,81 @@ namespace Moq_Trainning_DemoTests
         #region 场景3
 
 #if Scenes3
+        [TestMethod]
+        public void 张小红100斤_吃了20斤西瓜_体重120斤名字叫不减肥就不改名的张小红()
+        {
+            //Arrange
+            var xiaohong = new Mock<IMan>();
+            xiaohong.SetupProperty(fake => fake.Name, "张小红");
+            xiaohong.SetupProperty(fake => fake.Weight, 100);
+            xiaohong.Setup(fake => fake.Eat(20))
+                    .Callback<int>(num =>
+                     {
+                         xiaohong.Object.Weight += num;
+                         xiaohong.Raise(fake1 => fake1.ImFull += null, new EventArgs());
+                     });
+            //Act
+            FamilyGathering.HaveDinner(xiaohong.Object, "西瓜", 20);
+            //Assert
+            Assert.AreEqual(120, xiaohong.Object.Weight);
+            Assert.AreEqual("不减肥就不改名的张小红", xiaohong.Object.Name);
+        }
+
+
+        [TestMethod]
+        [DataRow(10,110, "张小红")]
+        [DataRow(20,120, "不减肥就不改名的张小红")]
+        public void 张小红100斤_吃西瓜_体重增加名字变化(int foodNum,int weight,string name)
+        {
+            //Arrange
+            var xiaohong = new Mock<IMan>();
+            xiaohong.SetupProperty(fake => fake.Name, "张小红");
+            xiaohong.SetupProperty(fake => fake.Weight, 100);
+            xiaohong.Setup(fake => fake.Eat(It.IsInRange(0,15,Range.Exclusive)))
+                    .Callback<int>(num =>
+                     {
+                         xiaohong.Object.Weight += num;
+                     });
+            xiaohong.Setup(fake => fake.Eat(It.IsInRange(15, int.MaxValue, Range.Inclusive)))
+                    .Callback<int>(num =>
+                     {
+                         xiaohong.Object.Weight += num;
+                         xiaohong.Raise(fake1 => fake1.ImFull += null, new EventArgs());
+                     });
+            //Act
+            FamilyGathering.HaveDinner(xiaohong.Object, "西瓜", foodNum);
+            //Assert
+            Assert.AreEqual(weight, xiaohong.Object.Weight);
+            Assert.AreEqual(name, xiaohong.Object.Name);
+        }
+#endif
+
+        #endregion
+
+        #region 场景4
+
+#if Scenes4
+        [TestMethod]
+        [DataRow(1, 100, "咱有钱")]
+        [DataRow(5, 500, "要吃土")]
+        public void 老王有存款1000块_发红包(int number, int account, string lastWord)
+        {
+            //Arrange
+            var laowang = new Mock<IMan>();
+            laowang.SetupProperty(fake => fake.Account, 1000);
+            laowang.Setup(fake => fake.DoSomething<int>("发红包", It.IsAny<int>()))
+                   .Callback<string, int>(
+                        (something, num) => { laowang.Object.Account = laowang.Object.Account - num; })
+                   .Returns(() => laowang.Object.Account > 0 ? "咱有钱" : "要吃土");
+            //Act
+            var result = FamilyGathering.FaHongbao(laowang.Object, number, account);
+            //Assert
+            laowang.VerifyGet(fake => fake.Account, Times.Exactly(number * 2));
+            laowang.VerifyGet(fake => fake.Name);
+            laowang.Verify(fake => fake.DoSomething<int>("发红包", It.IsAny<int>()), Times.Exactly(number));
+            Assert.AreEqual(lastWord, result);
+        }
+
 #endif
 
         #endregion

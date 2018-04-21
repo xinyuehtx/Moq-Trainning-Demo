@@ -16,7 +16,7 @@ namespace Moq_Trainning_Demo
         IMan Child { get; set; }
         event EventHandler ImFull;
         string SayHi(string friend);
-        string DoSomething(string something);
+        string DoSomething<T>(string something, T arg);
         void Eat(int food);
     }
 }
