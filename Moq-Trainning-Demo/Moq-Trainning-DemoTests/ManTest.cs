@@ -1,4 +1,4 @@
-﻿#define Scenes1
+﻿#define Scenes3
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -129,24 +129,116 @@ namespace Moq_Trainning_DemoTests
         {
             //Arrange
             var xiaoming = new Mock<IMan>();
-            xiaoming.Setup(fake => fake.GetAge()).Returns(3);
+            xiaoming.Setup(fake => fake.Age).Returns(3);
             //Act
             var result = FamilyGathering.AskAge(xiaoming.Object);
             //Assert
-            Assert.AreEqual("哟，几年不见都长这么大了？", result);
+            Assert.AreEqual("哟，3岁了，几年不见都长这么大了？", result);
         }
 
         [TestMethod]
         public void 小红30岁_问年龄_找对象()
         {
             //Arrange
+            var xiaohon = new Mock<IMan>();
+            xiaohon.Setup(fake => fake.Age).Returns(30);
+            //Act
+            var result = FamilyGathering.AskAge(xiaohon.Object);
+            //Assert
+            Assert.AreEqual("哟，30岁了，该去找个对象了吧。", result);
+        }
+
+        [TestMethod]
+        public void 老王儿子3岁_问儿子年龄_长大了()
+        {
+            //Arrange
             var xiaoming = new Mock<IMan>();
-            xiaoming.Setup(fake => fake.GetAge()).Returns(30);
+            xiaoming.Setup(fake => fake.Age).Returns(3);
+            var laowang = new Mock<IMan>();
+            laowang.Setup(fake => fake.Child).Returns(xiaoming.Object);
+            //Act
+            var result = FamilyGathering.AskChildAge(laowang.Object);
+            //Assert
+            Assert.AreEqual("哟，3岁了，几年不见都长这么大了？", result);
+        }
+
+        [TestMethod]
+        public void 老王儿子3岁_问儿子年龄_长大了2()
+        {
+            //Arrange
+            var laowang = new Mock<IMan>();
+            laowang.Setup(fake => fake.Child.Age).Returns(3);
+            //Act
+            var result = FamilyGathering.AskChildAge(laowang.Object);
+            //Assert
+            Assert.AreEqual("哟，3岁了，几年不见都长这么大了？", result);
+        }
+
+        [TestMethod]
+        public void 小明3岁_问年龄_长大了2()
+        {
+            //Arrange
+            var xiaoming = new Mock<IMan>();
+            xiaoming.Object.Age = 3;
             //Act
             var result = FamilyGathering.AskAge(xiaoming.Object);
             //Assert
-            Assert.AreEqual("哟，几年不见都长这么大了？该去找个对象了吧。", result);
+            Assert.AreEqual("哟，3岁了，几年不见都长这么大了？", result);
         }
+
+        [TestMethod]
+        public void 小明3岁_问年龄_长大了3()
+        {
+            //Arrange
+            var xiaoming = new Mock<IMan>();
+            xiaoming.SetupProperty(fake => fake.Age, 3);
+            //Act
+            var result = FamilyGathering.AskAge(xiaoming.Object);
+            //Assert
+            Assert.AreEqual("哟，3岁了，几年不见都长这么大了？", result);
+        }
+
+        [TestMethod]
+        public void 小明3岁_问年龄_长大了4()
+        {
+            //Arrange
+            var xiaoming = new Mock<IMan>();
+            xiaoming.SetupAllProperties();
+            var @object = xiaoming.Object;
+            @object.Name = "李小明";
+            @object.Age = 3;
+            @object.Occupation = "学生";
+            @object.Weight = 30;
+            @object.Account = 100;
+
+            //Act
+            //Assert
+            Assert.AreEqual("李小明", xiaoming.Object.Name);
+            Assert.AreEqual(3, xiaoming.Object.Age);
+            Assert.AreEqual("学生", xiaoming.Object.Occupation);
+            Assert.AreEqual(30, xiaoming.Object.Weight);
+            Assert.AreEqual(100, xiaoming.Object.Account);
+        }
+
+        [TestMethod]
+        public void 小明3岁_过年_4岁()
+        {
+            //Arrange
+            var xiaoming = new Mock<IMan>();
+            xiaoming.SetupSet(fake=>fake.Age++);
+            //Act
+            FamilyGathering.HappyNewYear(xiaoming.Object);
+            //Assert
+            xiaoming.VerifyAll();
+        }
+
+#endif
+
+        #endregion
+
+        #region 场景3
+
+#if Scenes3
 #endif
 
         #endregion

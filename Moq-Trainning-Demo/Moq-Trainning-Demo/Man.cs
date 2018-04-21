@@ -15,7 +15,6 @@ namespace Moq_Trainning_Demo
         long Account { get; set; }
         IMan Child { get; set; }
         event EventHandler ImFull;
-        int GetAge();
         string SayHi(string friend);
         string DoSomething(string something);
         void Eat(int food);
